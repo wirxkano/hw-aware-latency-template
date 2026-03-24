@@ -1,4 +1,3 @@
-import logging
 import numpy as np
 from typing import Any
 from xgboost import XGBRegressor
@@ -12,9 +11,9 @@ from encoders.device_encoder import DeviceEncoder
 from core.dataset import DatasetBuilder
 from core.model import ModelFactory
 from core.sample import EncodedSample
+from logger import Logger
 
-logger = logging.getLogger(__name__)
-
+logger = Logger()
 
 class HardwareAwarePipeline:
     def __init__(
@@ -39,7 +38,7 @@ class HardwareAwarePipeline:
             log_transform_target=self._log_target,
         )
         self._is_fitted = True
-        logger.info("Pipeline fitted on devices: %s", self._registry.names)
+        logger.info(f"Pipeline fitted on devices: {self._registry.names}")
         return self
 
     def register_device(
@@ -69,19 +68,17 @@ class HardwareAwarePipeline:
     def build_dataset(
         self,
         api: Any,
+        hw_api: Any,
         device_names: list[str] | None = None,
         dataset: str = "cifar10",
-        latency_key_template: str = "{device}-latency",
-        hp: str = "200",
         max_archs: int | None = None,
     ) -> tuple[np.ndarray, np.ndarray, list[dict]]:
         self._check_fitted()
         return self._builder.build(
             api=api,
+            hw_api=hw_api,
             device_names=device_names,
             dataset=dataset,
-            latency_key_template=latency_key_template,
-            hp=hp,
             max_archs=max_archs,
         )
 
@@ -90,7 +87,6 @@ class HardwareAwarePipeline:
         X: np.ndarray,
         y: np.ndarray,
         meta: list[dict],
-        test_size: float = 0.2,
         verbose: int = 50,
         **model_overrides: Any,
     ) -> tuple[XGBRegressor, dict[str, Any]]:
@@ -98,7 +94,6 @@ class HardwareAwarePipeline:
             X=X,
             y=y,
             meta=meta,
-            test_size=test_size,
             verbose=verbose,
             **model_overrides,
         )

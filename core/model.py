@@ -1,11 +1,12 @@
-import logging
 import numpy as np
 import pandas as pd
 from typing import Any
 from xgboost import XGBRegressor
 from sklearn.model_selection import GroupShuffleSplit
 
-logger = logging.getLogger(__name__)
+from logger import Logger
+
+logger = Logger()
 
 
 class ModelFactory:
@@ -27,6 +28,24 @@ class ModelFactory:
     def build(cls, **overrides: Any) -> XGBRegressor:
         params = {**cls._DEFAULTS, **overrides}
         return XGBRegressor(**params)
+    
+    @classmethod
+    def split_3way(cls, X, y, meta, train_ratio=0.7, val_ratio=0.15, random_state=42):
+        groups = np.array([m["arch_idx"] for m in meta])
+        gss1 = GroupShuffleSplit(n_splits=1, train_size=train_ratio, random_state=random_state)
+        train_idx, temp_idx = next(gss1.split(X, y, groups=groups))
+
+        temp_groups = groups[temp_idx]
+
+        val_size = val_ratio / (1.0 - train_ratio)
+
+        gss2 = GroupShuffleSplit(n_splits=1, train_size=val_size, random_state=random_state)
+        val_sub_idx, test_sub_idx = next(gss2.split(X[temp_idx], y[temp_idx], groups=temp_groups))
+
+        val_idx = temp_idx[val_sub_idx]
+        test_idx = temp_idx[test_sub_idx]
+
+        return train_idx, val_idx, test_idx
 
     @classmethod
     def train(
@@ -34,19 +53,19 @@ class ModelFactory:
         X: np.ndarray,
         y: np.ndarray,
         meta: list[dict],
-        test_size: float = 0.2,
         verbose: int = 50,
         **model_overrides: Any,
     ) -> tuple[XGBRegressor, dict[str, Any]]:
-        arch_groups = [m["arch_idx"] for m in meta]
-        splitter = GroupShuffleSplit(n_splits=1, test_size=test_size, random_state=42)
-        train_idx, test_idx = next(splitter.split(X, y, groups=arch_groups))
+        train_idx, val_idx, test_idx = cls.split_3way(X, y, meta)
 
         model = cls.build(**model_overrides)
+        alpha = 0.1
+        weights = alpha * (1 / (y + 1e-6)) + (1 - alpha)
         model.fit(
             X[train_idx],
             y[train_idx],
-            eval_set=[(X[test_idx], y[test_idx])],
+            eval_set=[(X[val_idx], y[val_idx])],
+            sample_weight=weights[train_idx],
             verbose=verbose,
         )
 
@@ -63,7 +82,7 @@ class ModelFactory:
         test_idx: np.ndarray,
         log_transformed: bool = True,
     ) -> dict[str, Any]:
-        raw_preds = model.predict(X_test)
+        raw_preds = model.predict(X_test, iteration_range=(0, model.best_iteration + 1))
         if log_transformed:
             preds = np.expm1(raw_preds)
             truths = np.expm1(y_test)
@@ -81,7 +100,7 @@ class ModelFactory:
         per_device_mae = df.groupby("device")["abs_err"].mean().to_dict()
 
         metrics = dict(mae=mae, mape=mape, per_device_mae=per_device_mae)
-        logger.info("Evaluation — MAE: %.4f | MAPE: %.2f%%", mae, mape)
+        logger.info(f"Evaluation — MAE: {mae:.4f} | MAPE: {mape:.2f}%")
         for dev, dev_mae in per_device_mae.items():
-            logger.info("  %-12s MAE: %.4f", dev, dev_mae)
+            logger.info(f"  {dev} MAE: {dev_mae:.4f}")
         return metrics

@@ -1,13 +1,13 @@
-import logging
 import numpy as np
 from typing import Any
 
+from logger import Logger
 from core.sample import EncodedSample
 from encoders.arch_encoder import ArchEncoder
 from encoders.cross_encoder import CrossEncoder
 from encoders.device_encoder import DeviceEncoder
 
-logger = logging.getLogger(__name__)
+logger = Logger()
 
 
 class DatasetBuilder:
@@ -42,10 +42,9 @@ class DatasetBuilder:
     def build(
         self,
         api: Any,
+        hw_api: Any,
         device_names: list[str] | None = None,
         dataset: str = "cifar10",
-        latency_key_template: str = "{device}-latency",
-        hp: str = "200",
         max_archs: int | None = None,
     ) -> tuple[np.ndarray, np.ndarray, list[dict]]:
         registry = self._device_enc._registry
@@ -63,15 +62,9 @@ class DatasetBuilder:
 
         for idx in range(n_total):
             arch_str = api.arch(idx)
-            try:
-                info = api.get_more_info(idx, dataset, hp=hp, is_random=False)
-            except Exception as exc:
-                logger.warning("Skipping arch %d — API error: %s", idx, exc)
-                continue
 
             for dev in device_names:
-                key = latency_key_template.format(device=dev)
-                latency = info.get(key)
+                latency = hw_api.query_by_index_and_device(idx, dev, dataset)
                 if latency is None or latency <= 0:
                     continue
 
@@ -83,10 +76,7 @@ class DatasetBuilder:
         X = np.array(X_rows, dtype=np.float32)
         y = np.array(y_rows, dtype=np.float32)
         logger.info(
-            "DatasetBuilder: %d samples built (%d archs × %d devices).",
-            len(X_rows),
-            n_total,
-            len(device_names),
+            f"DatasetBuilder: {len(X_rows)} samples built ({n_total} archs x {len(device_names)} devices)."
         )
         return X, y, meta
 

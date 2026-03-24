@@ -1,0 +1,21 @@
+2026-03-24 04:18:21 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 04:18:21 | INFO     | Log file → experiments/xgboost/run_20260324_041821.log
+2026-03-24 04:18:21 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 04:18:21 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 04:18:21 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 04:18:21 | INFO     | Log file → experiments/xgboost/run_20260324_041821.log
+2026-03-24 04:18:21 | INFO     | Log file → experiments/xgboost/run_20260324_041821.log
+2026-03-24 04:18:21 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 04:18:21 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 04:18:21 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 04:18:21 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 04:18:21 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 04:18:21 | INFO     | Log file → experiments/xgboost/run_20260324_041821.log
+2026-03-24 04:18:21 | INFO     | Log file → experiments/xgboost/run_20260324_041821.log
+2026-03-24 04:18:21 | INFO     | Log file → experiments/xgboost/run_20260324_041821.log
+2026-03-24 04:18:21 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 04:18:21 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 04:18:21 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 04:18:21 | INFO     | Pipeline fitted on devices: ['edgegpu', 'raspi4', 'pixel3', 'fpga', 'eyeriss']
+2026-03-24 04:18:21 | INFO     | Pipeline fitted on devices: ['edgegpu', 'raspi4', 'pixel3', 'fpga', 'eyeriss']
+2026-03-24 04:18:21 | INFO     | Pipeline fitted on devices: ['edgegpu', 'raspi4', 'pixel3', 'fpga', 'eyeriss']

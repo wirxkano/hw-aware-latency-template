@@ -59,7 +59,6 @@ class ArchEncoder:
 
     @property
     def feature_names(self) -> list[str]:
-        """Human-readable name for each of the 38 output dimensions."""
         names: list[str] = []
         for edge_idx in range(NUM_EDGES):
             for op in OPS:

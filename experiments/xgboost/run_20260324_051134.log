@@ -1,0 +1,42 @@
+2026-03-24 05:11:34 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 05:11:34 | INFO     | Log file → experiments/xgboost/run_20260324_051134.log
+2026-03-24 05:11:34 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 05:11:34 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 05:11:34 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 05:11:34 | INFO     | Log file → experiments/xgboost/run_20260324_051134.log
+2026-03-24 05:11:34 | INFO     | Log file → experiments/xgboost/run_20260324_051134.log
+2026-03-24 05:11:34 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 05:11:34 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 05:11:34 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 05:11:34 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 05:11:34 | INFO     | Logger initialized — experiments/xgboost
+2026-03-24 05:11:34 | INFO     | Log file → experiments/xgboost/run_20260324_051134.log
+2026-03-24 05:11:34 | INFO     | Log file → experiments/xgboost/run_20260324_051134.log
+2026-03-24 05:11:34 | INFO     | Log file → experiments/xgboost/run_20260324_051134.log
+2026-03-24 05:11:34 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 05:11:34 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 05:11:34 | INFO     | CSV metrics → experiments/xgboost/metrics.csv
+2026-03-24 05:11:34 | INFO     | Pipeline fitted on devices: ['edgegpu', 'raspi4', 'pixel3', 'fpga', 'eyeriss']
+2026-03-24 05:11:34 | INFO     | Pipeline fitted on devices: ['edgegpu', 'raspi4', 'pixel3', 'fpga', 'eyeriss']
+2026-03-24 05:11:34 | INFO     | Pipeline fitted on devices: ['edgegpu', 'raspi4', 'pixel3', 'fpga', 'eyeriss']
+2026-03-24 05:11:55 | INFO     | DatasetBuilder: 78125 samples built (15625 archs x 5 devices).
+2026-03-24 05:11:55 | INFO     | DatasetBuilder: 78125 samples built (15625 archs x 5 devices).
+2026-03-24 05:11:55 | INFO     | DatasetBuilder: 78125 samples built (15625 archs x 5 devices).
+2026-03-24 05:11:56 | INFO     | Evaluation — MAE: 0.8814 | MAPE: 26.40%
+2026-03-24 05:11:56 | INFO     | Evaluation — MAE: 0.8814 | MAPE: 26.40%
+2026-03-24 05:11:56 | INFO     | Evaluation — MAE: 0.8814 | MAPE: 26.40%
+2026-03-24 05:11:56 | INFO     |   edgegpu MAE: 0.3935
+2026-03-24 05:11:56 | INFO     |   edgegpu MAE: 0.3935
+2026-03-24 05:11:56 | INFO     |   edgegpu MAE: 0.3935
+2026-03-24 05:11:56 | INFO     |   eyeriss MAE: 0.2303
+2026-03-24 05:11:56 | INFO     |   eyeriss MAE: 0.2303
+2026-03-24 05:11:56 | INFO     |   eyeriss MAE: 0.2303
+2026-03-24 05:11:56 | INFO     |   fpga MAE: 0.0893
+2026-03-24 05:11:56 | INFO     |   fpga MAE: 0.0893
+2026-03-24 05:11:56 | INFO     |   fpga MAE: 0.0893
+2026-03-24 05:11:56 | INFO     |   pixel3 MAE: 1.2319
+2026-03-24 05:11:56 | INFO     |   pixel3 MAE: 1.2319
+2026-03-24 05:11:56 | INFO     |   pixel3 MAE: 1.2319
+2026-03-24 05:11:56 | INFO     |   raspi4 MAE: 2.4618
+2026-03-24 05:11:56 | INFO     |   raspi4 MAE: 2.4618
+2026-03-24 05:11:56 | INFO     |   raspi4 MAE: 2.4618
