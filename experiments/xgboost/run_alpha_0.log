@@ -23,8 +23,6 @@
 2026-03-24 04:59:42 | INFO     | DatasetBuilder: 78125 samples built (15625 archs x 5 devices).
 2026-03-24 04:59:42 | INFO     | DatasetBuilder: 78125 samples built (15625 archs x 5 devices).
 2026-03-24 04:59:44 | INFO     | Evaluation — MAE: 0.6574 | MAPE: 33.47%
-2026-03-24 04:59:44 | INFO     | Evaluation — MAE: 0.6574 | MAPE: 33.47%
-2026-03-24 04:59:44 | INFO     | Evaluation — MAE: 0.6574 | MAPE: 33.47%
 2026-03-24 04:59:44 | INFO     |   edgegpu MAE: 0.2538
 2026-03-24 04:59:44 | INFO     |   edgegpu MAE: 0.2538
 2026-03-24 04:59:44 | INFO     |   edgegpu MAE: 0.2538

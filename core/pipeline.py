@@ -11,9 +11,7 @@ from encoders.device_encoder import DeviceEncoder
 from core.dataset import DatasetBuilder
 from core.model import ModelFactory
 from core.sample import EncodedSample
-from logger import Logger
-
-logger = Logger()
+from logger import logger
 
 class HardwareAwarePipeline:
     def __init__(

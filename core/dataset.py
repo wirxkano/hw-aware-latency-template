@@ -1,13 +1,11 @@
 import numpy as np
 from typing import Any
 
-from logger import Logger
+from logger import logger
 from core.sample import EncodedSample
 from encoders.arch_encoder import ArchEncoder
 from encoders.cross_encoder import CrossEncoder
 from encoders.device_encoder import DeviceEncoder
-
-logger = Logger()
 
 
 class DatasetBuilder:

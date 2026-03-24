@@ -4,9 +4,7 @@ from typing import Any
 from xgboost import XGBRegressor
 from sklearn.model_selection import GroupShuffleSplit
 
-from logger import Logger
-
-logger = Logger()
+from logger import logger
 
 
 class ModelFactory:
@@ -19,6 +17,7 @@ class ModelFactory:
         min_child_weight=3,
         gamma=0.1,
         objective="reg:squarederror",
+        eval_metric="mae",
         early_stopping_rounds=40,
         random_state=42,
         n_jobs=-1,
@@ -64,10 +63,21 @@ class ModelFactory:
         model.fit(
             X[train_idx],
             y[train_idx],
-            eval_set=[(X[val_idx], y[val_idx])],
+            eval_set=[
+                (X[train_idx], y[train_idx]),
+                (X[val_idx], y[val_idx])
+            ], # for drawing learning curve
             sample_weight=weights[train_idx],
+            sample_weight_eval_set=[weights[train_idx], None],
             verbose=verbose,
         )
+        results = model.evals_result()
+        model.save_model(f"pretrained/xgb_model_weighted_mse_alpha_{str(alpha)}.json")
+        
+        train_curve = results["validation_0"]["mae"]
+        val_curve = results["validation_1"]["mae"]
+        for i, (tr, va) in enumerate(zip(train_curve, val_curve)):
+            logger.info(f"[{i}] train-mae:{tr:.5f} | val-mae:{va:.5f}")
 
         metrics = cls.evaluate(model, X[test_idx], y[test_idx], meta, test_idx)
         return model, metrics

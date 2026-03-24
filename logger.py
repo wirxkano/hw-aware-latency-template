@@ -16,6 +16,8 @@ class Logger:
         "red": "\033[91m",
         "cyan": "\033[96m",
     }
+    _instance = None
+    
 
     def __init__(
         self,
@@ -24,6 +26,8 @@ class Logger:
         use_tensorboard: bool = False,
         csv_filename: str = "metrics.csv",
     ):
+        if hasattr(self, "_initialized"):
+            return
         self.experiment_name = experiment_name
         self.log_dir = Path(log_dir) / experiment_name
         self.log_dir.mkdir(parents=True, exist_ok=True)
@@ -65,8 +69,10 @@ class Logger:
                 )
 
         self.info(f"Logger initialized — {self.log_dir}")
-        self.info(f"Log file → {log_file}")
-        self.info(f"CSV metrics → {self._csv_path}")
+        self.info(f"Log file - {log_file}")
+        self.info(f"CSV metrics - {self._csv_path}")
+        
+        self._initialized = True
 
     def _color(self, text: str, *color_names: str) -> str:
         """Wrap text in ANSI codes. Skipped if not a TTY (e.g. redirected to file)."""
@@ -168,3 +174,6 @@ class Logger:
         if self._tb_writer is not None:
             self._tb_writer.close()
         self.info("Logger closed.")
+
+
+logger = Logger()
