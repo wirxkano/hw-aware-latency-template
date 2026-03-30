@@ -70,6 +70,7 @@ class HardwareAwarePipeline:
         device_names: list[str] | None = None,
         dataset: str = "cifar10",
         max_archs: int | None = None,
+        is_hw_aware: bool = True,
     ) -> tuple[np.ndarray, np.ndarray, list[dict]]:
         self._check_fitted()
         return self._builder.build(
@@ -78,6 +79,7 @@ class HardwareAwarePipeline:
             device_names=device_names,
             dataset=dataset,
             max_archs=max_archs,
+            is_hw_aware=is_hw_aware,
         )
 
     def train(

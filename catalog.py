@@ -93,6 +93,5 @@ DEFAULT_DEVICES: list[DeviceSpec] = [
     EYERISS,
 ]
 
-
 def build_registry() -> DeviceRegistry:
     return DeviceRegistry(initial_devices=DEFAULT_DEVICES)

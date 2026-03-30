@@ -72,7 +72,7 @@ class ModelFactory:
             verbose=verbose,
         )
         results = model.evals_result()
-        model.save_model(f"pretrained/xgb_model_weighted_mse_alpha_{str(alpha)}.json")
+        model.save_model(f"pretrained/xgb_model_weighted_mse_no_hw_aware.json")
         
         train_curve = results["validation_0"]["mae"]
         val_curve = results["validation_1"]["mae"]

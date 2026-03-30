@@ -11,10 +11,13 @@ class EncodedSample:
     cross_vec: np.ndarray
     arch_str: str
     device_name: str
+    is_hw_aware: bool
 
     @property
     def feature_vector(self) -> np.ndarray:
-        return np.concatenate([self.arch_vec, self.device_vec, self.cross_vec])
+        if self.is_hw_aware:
+            return np.concatenate([self.arch_vec, self.device_vec, self.cross_vec])
+        return self.arch_vec
 
     @property
     def one_hot(self) -> np.ndarray:

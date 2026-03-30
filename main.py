@@ -16,6 +16,7 @@ X, y, meta = pipeline.build_dataset(
     hw_api,
     device_names=["edgegpu", "raspi4", "eyeriss", "pixel3", "fpga"],
     dataset="cifar10",
+    is_hw_aware=False
 )
 
 model, metrics = pipeline.train(X, y, meta, n_estimators=600)

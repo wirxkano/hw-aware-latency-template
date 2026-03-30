@@ -21,11 +21,11 @@ class DatasetBuilder:
         self._cross_enc = cross_encoder
         self._log_target = log_transform_target
 
-    def encode(self, arch_str: str, device_name: str) -> np.ndarray:
-        sample = self.encode_sample(arch_str, device_name)
+    def encode(self, arch_str: str, device_name: str, is_hw_aware: bool) -> np.ndarray:
+        sample = self.encode_sample(arch_str, device_name, is_hw_aware)
         return sample.feature_vector
 
-    def encode_sample(self, arch_str: str, device_name: str) -> EncodedSample:
+    def encode_sample(self, arch_str: str, device_name: str, is_hw_aware) -> EncodedSample:
         arch_vec = self._arch_enc.encode(arch_str)
         device_vec = self._device_enc.encode(device_name)
         cross_vec = self._cross_enc.encode(arch_vec, device_vec)
@@ -35,6 +35,7 @@ class DatasetBuilder:
             cross_vec=cross_vec,
             arch_str=arch_str,
             device_name=device_name,
+            is_hw_aware=is_hw_aware,
         )
 
     def build(
@@ -44,6 +45,7 @@ class DatasetBuilder:
         device_names: list[str] | None = None,
         dataset: str = "cifar10",
         max_archs: int | None = None,
+        is_hw_aware: bool = True,
     ) -> tuple[np.ndarray, np.ndarray, list[dict]]:
         registry = self._device_enc._registry
         if device_names is None:
@@ -66,7 +68,7 @@ class DatasetBuilder:
                 if latency is None or latency <= 0:
                     continue
 
-                X_rows.append(self.encode(arch_str, dev))
+                X_rows.append(self.encode(arch_str, dev, is_hw_aware))
                 y_val = float(np.log1p(latency)) if self._log_target else float(latency)
                 y_rows.append(y_val)
                 meta.append({"arch_idx": idx, "device": dev, "arch_str": arch_str})
